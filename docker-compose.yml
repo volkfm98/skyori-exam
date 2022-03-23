@@ -1,0 +1,12 @@
+name: skyori
+services:
+  rabbit:
+    image: rabbitmq
+    ports:
+      - "5673:5672"
+  postgres:
+    image: postgres
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword

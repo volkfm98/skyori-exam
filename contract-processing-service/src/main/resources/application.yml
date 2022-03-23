@@ -1,0 +1,16 @@
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5673
+    username: guest
+    password: guest
+  jpa:
+    generate-ddl: true
+    properties:
+      hibernate:
+        ddl-auto: create-drop
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: jdbc:postgresql://localhost:5433/contractdb
+    username: postgres
+    password: mysecretpassword
