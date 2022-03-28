@@ -1,9 +1,9 @@
 package ru.skyori.exam.contractprocessingservice;
 
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -25,7 +25,8 @@ public class Contract {
 
     private LocalDateTime dateSend;
 
-    @CreatedDate
+    @Column(columnDefinition = "timestamp default now()", nullable = false)
+    @CreationTimestamp
     private LocalDateTime dateCreate;
 
     // Indexed

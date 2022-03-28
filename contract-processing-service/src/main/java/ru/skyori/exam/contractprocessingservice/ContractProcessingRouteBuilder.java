@@ -37,7 +37,7 @@ public class ContractProcessingRouteBuilder extends RouteBuilder {
                     }
 
                     if (status.getStatus() != ContractStatus.Status.ERROR) {
-                        contractRepository.save(contractEntity);
+                        contractEntity = contractRepository.save(contractEntity);
 
                         status.setDateCreate(contractEntity.getDateCreate());
                         status.setStatus(ContractStatus.Status.CREATED);
