@@ -9,6 +9,8 @@ import ru.esb.xmlns.ext.contractservice.CreateNewContractRequest;
 import ru.esb.xmlns.ext.contractservice.CreateNewContractResponse;
 import ru.skyori.exam.CreateNewContract;
 
+import java.time.LocalDateTime;
+
 @Endpoint
 public class CreateNewContractEndpoint {
     private static final String NAMESPACE_URI = "http://xmlns.esb.ru/ext/ContractService/";
@@ -21,10 +23,14 @@ public class CreateNewContractEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "CreateNewContractRequest")
     @ResponsePayload
     public CreateNewContractResponse handleCreateNewContractRequest(@RequestPayload CreateNewContractRequest request) {
-        CreateNewContract newContract = NewContractMapper.INSTANCE.newContractRequestToNewContract(request);
+        CreateNewContract newContract;
         CreateNewContractResponse response = new CreateNewContractResponse();
 
         try {
+            newContract = NewContractMapper.INSTANCE.newContractRequestToNewContract(request);
+            newContract.setClientApi(CreateNewContract.ClientApi.SOAP);
+            newContract.setDateSend(LocalDateTime.now());
+
             amqpTemplate.convertAndSend("contract.create", newContract);
             response.setStatus("RequestIsQueued");
         } catch (Exception e) {
