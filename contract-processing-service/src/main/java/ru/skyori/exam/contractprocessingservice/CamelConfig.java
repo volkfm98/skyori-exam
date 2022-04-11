@@ -7,12 +7,9 @@ import org.apache.camel.Component;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.jackson.JacksonDataFormat;
 import org.apache.camel.component.rabbitmq.RabbitMQComponent;
-import org.apache.camel.impl.DefaultCamelContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import ru.skyori.exam.ContractStatus;
-import ru.skyori.exam.CreateNewContract;
 
 import javax.annotation.Resource;
 
@@ -33,10 +30,12 @@ public class CamelConfig {
     }
 
     @Bean
-    Component contractEventQueueComponent(ConnectionFactory rabbitConnectionFactory) {
+    Component contractEventQueueComponent(ConnectionFactory rabbitConnectionFactory, CamelContext ctx) {
         RabbitMQComponent component = new RabbitMQComponent();
         component.setConnectionFactory(rabbitConnectionFactory);
         component.setDeclare(true);
+
+        ctx.addComponent("contract", component);
 
         return component;
     }
@@ -44,11 +43,5 @@ public class CamelConfig {
     @Bean
     ObjectMapper jacksonObjectMapper() {
         return new ObjectMapper().findAndRegisterModules();
-    }
-
-    @Bean
-    CamelContext camelContext(Component contractEventQueueComponent) throws Exception {
-        CamelContext ctx = new DefaultCamelContext();
-        return ctx;
     }
 }
