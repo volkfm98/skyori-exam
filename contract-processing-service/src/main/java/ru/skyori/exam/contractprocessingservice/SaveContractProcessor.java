@@ -10,7 +10,7 @@ import ru.skyori.exam.CreateNewContract;
 @RequiredArgsConstructor
 public class SaveContractProcessor implements Processor {
     @NonNull
-    private ContractRepository contractRepository;
+    private final ContractRepository contractRepository;
     @NonNull
     private final ContractMapper contractMapper;
 
