@@ -11,11 +11,13 @@ import ru.skyori.exam.CreateNewContract;
 public class SaveContractProcessor implements Processor {
     @NonNull
     private ContractRepository contractRepository;
+    @NonNull
+    private final ContractMapper contractMapper;
 
     @Override
     public void process(Exchange exchange) throws Exception {
         CreateNewContract newContract = exchange.getIn().getBody(CreateNewContract.class);
-        Contract contractEntity = ContractMapper.INSTANCE.CreateNewContractToContract(newContract);
+        Contract contractEntity = contractMapper.CreateNewContractToContract(newContract);
         ContractStatus status = new ContractStatus();
 
         if (contractRepository.existsById(contractEntity.getId())) {

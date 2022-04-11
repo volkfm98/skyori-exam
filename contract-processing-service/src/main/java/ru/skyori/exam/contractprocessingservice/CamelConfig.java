@@ -40,8 +40,8 @@ public class CamelConfig {
     }
 
     @Bean
-    Processor saveContractProcessor(ContractRepository repo) {
-        return new SaveContractProcessor(repo);
+    Processor saveContractProcessor(ContractRepository repo, ContractMapper contractMapper) {
+        return new SaveContractProcessor(repo, contractMapper);
     }
 
     @Bean
