@@ -4,8 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.ConnectionFactory;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Component;
-import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.component.jackson.JacksonDataFormat;
+import org.apache.camel.Processor;
 import org.apache.camel.component.rabbitmq.RabbitMQComponent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,6 +37,11 @@ public class CamelConfig {
         ctx.addComponent("contract", component);
 
         return component;
+    }
+
+    @Bean
+    Processor saveContractProcessor(ContractRepository repo) {
+        return new SaveContractProcessor(repo);
     }
 
     @Bean

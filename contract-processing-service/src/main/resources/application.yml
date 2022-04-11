@@ -14,3 +14,7 @@ spring:
     url: jdbc:postgresql://localhost:5433/contractdb
     username: postgres
     password: mysecretpassword
+camel:
+  dataformat:
+    json-jackson:
+      auto-discover-object-mapper: true
